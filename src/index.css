@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Ops-console palette. Every surface/text/status colour in the app comes from
+   these tokens — nothing hardcodes a hex outside this block. */
+@theme {
+  --color-bg: #0f1113;
+  --color-panel: #16191d;
+  --color-line: #23272d;
+  --color-ink: #e8e6df;
+  --color-ink-dim: #9aa0a6;
+
+  --color-st-running: #5fb89c;
+  --color-st-blocked: #d9a05b;
+  --color-st-idle: #6b7280;
+  --color-st-done: #7c9473;
+  --color-st-error: #c9564f;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --default-font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Thin, unobtrusive scrollbars — the console has a lot of scrolling regions. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- office scene idle loops ------------------------------------------- */
+@keyframes agent-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes agent-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.05);
+  }
+}
+
+.agent-bob {
+  animation: agent-bob var(--bob-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+
+.agent-blink {
+  transform-origin: center;
+  animation: agent-blink var(--blink-duration, 6s) linear infinite;
+  animation-delay: var(--blink-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-bob,
+  .agent-blink {
+    animation: none;
+  }
+}
